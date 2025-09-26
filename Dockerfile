@@ -1,44 +1,42 @@
-FROM php:8.2-apache
+FROM ubuntu:22.04
 
-# Imagemagic (convert)
-# Git (required by composer)
-# Build essential/cmake for C++ projects
-RUN apt-get update && apt-get install -y \
-    git build-essential cmake imagemagick libmagickwand-dev --no-install-recommends \
-    && pecl install imagick \
-    && docker-php-ext-enable imagick
+# Update and install required dependencies
+RUN apt update && apt install -y \
+    git build-essential cmake imagemagick libmagickwand-dev sqlite3 libsqlite3-dev curl
 
-# Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+WORKDIR /home/
 
 # MPQExtractor
-RUN git clone https://github.com/Kanma/MPQExtractor.git && \
-    cd MPQExtractor && \
-    git submodule init && \
-    git submodule update && \
-    mkdir build && \
-    cd build && \
-    cmake .. && \
-    cmake --build . && \
-    mv bin/MPQExtractor /usr/bin/ && \
-    chmod +x /usr/bin/MPQExtractor
+RUN git clone https://github.com/Ruk33/MPQExtractor.git
 
-COPY ./php.ini /usr/local/etc/php/conf.d/
+WORKDIR MPQExtractor
 
-COPY ./ /var/www/html/
+RUN git submodule init
+RUN git submodule update
+RUN cmake .
+RUN cmake --build .
+RUN mv bin/MPQExtractor /usr/local/bin/
+RUN chmod +x /usr/local/bin/MPQExtractor
+
+WORKDIR /home/
 
 # BLPConverter
-RUN cd /var/www/html/BLPConverter && \
-    mkdir build && \
-    cd build && \
-    cmake .. && \
-    make && \
-    mv bin/BLPConverter /usr/bin/ && \
-    chmod +x /usr/bin/BLPConverter
+RUN git clone https://github.com/Ruk33/BLPConverter.git
 
-EXPOSE 80
+WORKDIR BLPConverter
 
-# Run composer
-RUN cd /var/www/html/PHP-MPQ && composer install
+RUN cmake .
+RUN make
+RUN mv bin/BLPConverter /usr/local/bin/
+RUN chmod +x /usr/local/bin/BLPConverter
 
-RUN cp /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/ && cp /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled/
+WORKDIR /home/app
+
+COPY ./ ./
+
+# Install FrankenPHP
+RUN curl https://frankenphp.dev/install.sh | sh && \
+    mv frankenphp /usr/local/bin/ && \
+    chmod +x /usr/local/bin/frankenphp
+
+CMD ["frankenphp", "run"]

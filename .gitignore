@@ -1,6 +1,7 @@
-maps/*
-pending/*
-processed/*
+public/maps/*
+public/pending/*
+public/processed/*
+public/storage/*
 log.txt
 composer.lock
 *.w3m.png
@@ -10,3 +11,4 @@ composer.lock
 *.tga
 *.w3x
 *.w3m
+include/database.sqlite

@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/home/app
+    environment:
+      DEV: true
+    tty: true

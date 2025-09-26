@@ -1,0 +1,13 @@
+click [id="menu-jugar"]
+
+intervention Asegurate de que los mapas "islas eco" y "corea" esten en la lista de mapas
+
+find [id="mapa-Islas Eco"]
+
+find [id="mapa-Corea"]
+
+type [islas] in [id="map_term"]
+
+find [id="mapa-Islas Eco"]
+
+don't find [id="mapa-Corea"]

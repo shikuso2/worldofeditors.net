@@ -1,0 +1,19 @@
+click [id="menu-jugar"]
+
+type [mi partida] in [id="name"]
+
+type [ruke] in [id="owner"]
+
+click [id="mapa-Islas Eco"]
+
+find [id="selected_map_nombre"] with Islas Eco
+
+find [id="selected_map_autor"] with Blizzard Entertainment
+
+find [id="selected_map_desc"] with Aunque estas islas están rodeadas por profundas y peligrosas aguas, se han vivido pocos momentos de paz. Muchas de las criaturas que las habitan son refugiados de guerra. No les queda nada que perder. No esperes una calurosa bienvenida.
+
+click [id="submit"]
+
+find [id="partida_creada"] with Partida creada!
+
+find [id="partida_creada_detalles"] with La partida mi partida ha sido creada. ruke puede iniciar el juego con el comando !start.

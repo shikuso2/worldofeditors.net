@@ -1,14 +1,22 @@
 ## Instalar
 
 1 - Descargar docker
-2 - Crear imagen con `docker build -t world-of-editors .`
-3 - Crear contenedor con `docker run -it --rm -p 3000:80 --name world-of-editors -v .:/var/www/html world-of-editors`
+2 - Correr con `docker-compose up`
+3 - Correr migraciones visitando http://localhost:8080/migration.php
 
 ## Carpetas
 
-- storage: Para guardar cualquier tipo de archivos que necesitemos (por ejemplo, mapas.csv)
-- maps: Donde se van a guardar los mapas (por ejemplo, (2)EchoIsles.w3x)
-- processed: Partidas que fueron creadas
-- pending: Partidas que necesitan ser creadas
-- PHP-MPQ/map_info: Informacion generada de los mapas en formato json
-- PHP-MPQ/thumbnails: Preview de los mapas generados
+- maps      : Donde se van a guardar los mapas (por ejemplo, (2)EchoIsles.w3x)
+- processed : Partidas que fueron creadas
+- pending   : Partidas que necesitan ser creadas
+- storage   : Para guardar archivos
+- public    : Paginas accesibles por los usuarios
+- include   : Archivos no accesibles por los usuarios donde podemos almacenar
+              funciones utiles (ejemplo: obtener informacion de los mapas)
+
+## Discord
+
+Para vincular discord se necesita crear una app desde https://discord.com/developers/applications
+
+Una vez creada la aplicacion, debemos obtener el CLIENT ID y CLIENT SECRET desde
+la seccion OAuth2.
